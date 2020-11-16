@@ -1,27 +1,62 @@
-# react-paypal
+# React-Paypal-Checkout-Button
 
-> react implementation of paypal checkout
+> A very simple, easy to use React button component for implementing paypal checkout
 
-[![NPM](https://img.shields.io/npm/v/react-paypal.svg)](https://www.npmjs.com/package/react-paypal) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/react-paypal-checkout-button.svg)](https://www.npmjs.com/package/react-paypal-checkout-button) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
-```bash
-npm install --save react-paypal
+```
+npm install --save react-paypal-checkout-button
+```
+
+or
+
+```
+yarn add react-paypal-checkout-button
 ```
 
 ## Usage
 
 ```tsx
-import React, { Component } from 'react'
+import React from 'react'
 
-import MyComponent from 'react-paypal'
+import PayPalCheckout from 'react-paypal-checkout-button'
 import 'react-paypal/dist/index.css'
 
-class Example extends Component {
-  render() {
-    return <MyComponent />
-  }
+const App = () => {
+  return (
+    <PayPalCheckout
+      clientId='Ae*****WD*******************'
+      amount={100}
+      currency='USD'
+      handleSuccessfulPayment={(data, order) => {
+        console.log({ data, order })
+      }}
+      handlePaymentError={(error) => {
+        console.log({ error })
+      }}
+    />
+  )
+}
+
+export default App
+```
+
+### Types
+
+All relevant types are bundled and exported with the npm package
+
+```
+type PayPalCheckoutProps = {
+  clientId: string
+  amount: number
+  currency: string
+  handleSuccessfulPayment?: (
+    data: OnApproveDataTypes,
+    order: OrderObjectTypes
+  ) => void
+  handlePaymentError?: (error: any) => void
 }
 ```
 
