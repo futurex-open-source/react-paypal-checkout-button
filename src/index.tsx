@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import ErrorContainer from './components/error-container.component'
 import Spinner from './components/spinner.component'
 import { PayPalCheckoutProps } from './types'
+import styles from './styles.module.css'
 
 const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
   clientId,
@@ -103,7 +104,7 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
   }, [loadState])
 
   const onRetry = () => {
-    setLoadState({ loaded: false, loading: true, error: '' })
+    setLoadState({ loaded: false, loading: false, error: '' })
   }
 
   const renderReactPayPal = () => {
@@ -120,7 +121,7 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
   //   <div style={{ width: '100%', margin: '20px' }} ref={paypalRef} />
   // )
 
-  return <div className='react-paypal-container'>{renderReactPayPal()}</div>
+  return <div className={styles.container}>{renderReactPayPal()}</div>
 }
 
 export default PayPalCheckout

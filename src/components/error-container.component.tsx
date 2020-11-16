@@ -1,15 +1,18 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import { ErrorContainerProps } from '../types'
+import styles from '../styles.module.css'
 
 const ErrorContainer: React.FC<ErrorContainerProps> = ({
   errorMessage,
   onRetry
 }) => (
-  <div className='error-container'>
-    <p className='error-message'>{errorMessage}</p>
+  <div className={styles['error-container']}>
+    <p className={styles['error-message']}>{errorMessage}</p>
 
-    <button onClick={onRetry}>Try again</button>
+    <button onClick={onRetry} className={styles['retry-button']}>
+      Try again
+    </button>
   </div>
 )
 
