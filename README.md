@@ -22,18 +22,18 @@ yarn add react-paypal-checkout-button
 import React from 'react'
 
 import PayPalCheckout from 'react-paypal-checkout-button'
-import 'react-paypal/dist/index.css'
+import 'react-paypal-checkout-button/dist/index.css'
 
 const App = () => {
   return (
     <PayPalCheckout
-      clientId='Ae*****WD*******************'
+      clientId='axew*******************&*&******'
       amount={100}
       currency='USD'
       handleSuccessfulPayment={(data, order) => {
         console.log({ data, order })
       }}
-      handlePaymentError={(error) => {
+      handleError={(error) => {
         console.log({ error })
       }}
     />
@@ -59,6 +59,16 @@ type PayPalCheckoutProps = {
   handlePaymentError?: (error: any) => void
 }
 ```
+
+## Contributing
+
+we hope to make this package the first option whenever it comes to implemeting paypal checkout, so you are always welcome to contribute to this project.
+
+- Fork it!
+- Create your feature branch: `git checkout -b feature-name`
+- commit your changes: `git commit -am 'Some commit message`
+- Push to the branch: `git push origin feature-name`
+- Submit a pull request :smiling_face_with_three_hearts::muscle:
 
 ## License
 

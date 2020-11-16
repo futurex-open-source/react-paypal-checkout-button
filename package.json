@@ -4,7 +4,7 @@
   "description": "A very simple, easy to use React button component for implementing paypal checkout",
   "author": "UcheSylvester",
   "license": "MIT",
-  "repository": "utureX-Open-Source/react-paypal-checkout-button",
+  "repository": "FutureX-Open-Source/react-paypal-checkout-button",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.tsx",
