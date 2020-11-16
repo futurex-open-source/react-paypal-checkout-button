@@ -1,7 +1,7 @@
 import React from 'react'
 
-import PayPalCheckout from 'react-paypal'
-import 'react-paypal/dist/index.css'
+import PayPalCheckout from 'react-paypal-checkout-button'
+import 'react-paypal-checkout-button/dist/index.css'
 
 const App = () => {
   return (
