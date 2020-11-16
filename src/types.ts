@@ -22,16 +22,20 @@ export type OrderObjectTypes = {
 }
 
 export type PayPalCheckoutProps = {
-  clientId: string
+  clientId?: string
   amount: number
   currency: string
-  handleSuccessfulPayment?: (data: any, order: any) => void
-  handlePaymentError?: (error: any) => void
+  handleSuccessfulPayment?: (
+    data: OnApproveDataTypes,
+    order: OrderObjectTypes
+  ) => void
+  handleError?: (error: any) => void
 }
 
 export type ErrorContainerProps = {
   errorMessage: string
   onRetry: () => void
+  shouldRetry: boolean
 }
 
 export type SpinnerProps = {

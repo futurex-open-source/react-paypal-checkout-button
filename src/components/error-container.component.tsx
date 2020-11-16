@@ -10,7 +10,7 @@ const ErrorContainer: React.FC<ErrorContainerProps> = ({
   <div className={styles['error-container']}>
     <p className={styles['error-message']}>{errorMessage}</p>
 
-    <button onClick={onRetry} className={styles['retry-button']}>
+    <button onClick={onRetry && onRetry} className={styles['retry-button']}>
       Try again
     </button>
   </div>

@@ -8,8 +8,11 @@ body {
   --box-shadow-hard: 0px 8px 15px rgba(0, 0, 0, 0.1);
 }
 
+.container {
+  margin-top: 1rem;
+}
+
 .error-container {
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
   justify-content: center;
