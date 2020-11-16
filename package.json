@@ -1,6 +1,6 @@
 {
   "name": "react-paypal",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "react implementation of paypal checkout",
   "author": "UcheSylvester",
   "license": "MIT",
