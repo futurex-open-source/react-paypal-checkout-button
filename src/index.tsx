@@ -98,14 +98,12 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
   const renderReactPayPal = () => {
     if (!loadState.loaded || loadState.loading || loadState.error) return null
 
-    return <div className='paypal-button-container' ref={paypalRef} />
+    return <div ref={paypalRef} />
   }
 
-  return !loadState.loaded && loadState.loading ? null : (
-    <div style={{ width: '100%', margin: '20px' }} ref={paypalRef} />
+  return (
+    <div className='react-paypal-button-container'>{renderReactPayPal()}</div>
   )
-
-  return renderReactPayPal()
 }
 
 export default PayPalCheckout
