@@ -7,3 +7,27 @@
   font-size: 2em;
   text-align: center;
 }
+
+.spinner {
+  width: 30px;
+  height: 30px;
+  margin: auto;
+  border-radius: 50%;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+  border: 3px solid rgb(241, 241, 241);
+  border-top-color: #3b7bbf;
+}
+
+.error-container {
+  border: 1px solid red;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

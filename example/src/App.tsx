@@ -1,10 +1,16 @@
 import React from 'react'
 
-import { ExampleComponent } from 'react-paypal'
+import PayPalCheckout from 'react-paypal'
 import 'react-paypal/dist/index.css'
 
 const App = () => {
-  return <ExampleComponent text="Create React Library Example 😄" />
+  return (
+    <PayPalCheckout
+      clientId='AXo8WDTPKkGnTDyx7K0tP3U4Kx-pLpbs8RFAh2ZVzAT09O9vVdBju3EMMichVoR_peEJgQUXhDClSb0p'
+      amount={100}
+      currency='USD'
+    />
+  )
 }
 
 export default App
