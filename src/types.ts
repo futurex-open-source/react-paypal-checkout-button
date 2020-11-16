@@ -25,7 +25,10 @@ export type PayPalCheckoutProps = {
   clientId: string
   amount: number
   currency: string
-  handleSuccessfulPayment?: (data: any, order: any) => void
+  handleSuccessfulPayment?: (
+    data: OnApproveDataTypes,
+    order: OrderObjectTypes
+  ) => void
   handlePaymentError?: (error: any) => void
 }
 

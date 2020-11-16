@@ -1,8 +1,11 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from 'react'
-import ErrorContainer from './components/error-container.component'
-import Spinner from './components/spinner.component'
-import { PayPalCheckoutProps } from './types'
+
+import {
+  OnApproveDataTypes,
+  OrderObjectTypes,
+  PayPalCheckoutProps
+} from './types'
 
 const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
   clientId,
@@ -15,7 +18,7 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
   const [loadState, setLoadState] = useState({
     loading: false,
     loaded: false,
-    error: 'an unexpected error occured'
+    error: ''
   })
   const GlobalWindow: any = window
 
@@ -84,8 +87,8 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
                 ]
               })
             },
-            onApprove: async (data: any, actions: any) => {
-              const order = await actions.order.capture()
+            onApprove: async (data: OnApproveDataTypes, actions: any) => {
+              const order: OrderObjectTypes = await actions.order.capture()
 
               console.log({ data, actions, order })
 
@@ -102,25 +105,17 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
     }
   }, [loadState])
 
-  const onRetry = () => {
-    setLoadState({ loaded: false, loading: true, error: '' })
-  }
-
   const renderReactPayPal = () => {
-    if (!loadState.loaded && loadState.loading && !loadState.error)
-      return <Spinner isLoading={loadState.loading} />
-
-    if (loadState.error)
-      return <ErrorContainer errorMessage={loadState.error} onRetry={onRetry} />
+    if (!loadState.loaded || loadState.loading || loadState.error) return null
 
     return <div className='paypal-button-container' ref={paypalRef} />
   }
 
-  // return !loadState.loaded && loadState.loading ? null : (
-  //   <div style={{ width: '100%', margin: '20px' }} ref={paypalRef} />
-  // )
+  return !loadState.loaded && loadState.loading ? null : (
+    <div style={{ width: '100%', margin: '20px' }} ref={paypalRef} />
+  )
 
-  return <div className='react-paypal-container'>{renderReactPayPal()}</div>
+  return renderReactPayPal()
 }
 
 export default PayPalCheckout

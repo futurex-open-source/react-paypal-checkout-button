@@ -4,7 +4,7 @@
   "description": "react implementation of paypal checkout",
   "author": "UcheSylvester",
   "license": "MIT",
-  "repository": "UcheSylvester/react-paypal",
+  "repository": "FutureX-Open-Source/react-paypal",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.tsx",
