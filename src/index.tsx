@@ -30,8 +30,6 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
       setLoadState((prev) => ({ ...prev, error: 'Client Id is required' }))
     }
 
-    console.log({ loadState })
-
     if (!loadState.loading && !loadState.loaded && !loadState.error) {
       setLoadState((prev) => ({ ...prev, loading: true }))
 
@@ -43,19 +41,14 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
       )
 
       document.body.appendChild(script)
-      console.log('append script')
 
-      script.addEventListener('error', (error) => {
+      script.addEventListener('error', () => {
         setLoadState((prev) => ({
           ...prev,
           loading: false,
           loaded: false,
           error: `An error occured while loading script...`
         }))
-
-        console.log({ scriptError: error })
-
-        // throw new Error(error.message)
       })
     }
 
@@ -91,13 +84,9 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
             onApprove: async (data: OnApproveDataTypes, actions: any) => {
               const order: OrderObjectTypes = await actions.order.capture()
 
-              console.log({ data, actions, order })
-
               handleSuccessfulPayment && handleSuccessfulPayment(data, order)
             },
             onError: (error: any) => {
-              console.log({ error })
-
               handlePaymentError && handlePaymentError(error)
             }
           })
