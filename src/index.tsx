@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from 'react'
+import './styles.module.css'
 
 import {
   OnApproveDataTypes,
