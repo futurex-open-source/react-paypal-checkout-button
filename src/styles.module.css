@@ -45,7 +45,6 @@ body {
   box-shadow: var(--box-shadow-hard);
 }
 
-<<<<<<< HEAD
 .spinner {
   width: 30px;
   height: 30px;
@@ -65,9 +64,4 @@ body {
   100% {
     transform: rotate(360deg);
   }
-=======
-.react-paypal-button-container {
-  border: 1px solid red;
-  width: 100%;
->>>>>>> main
 }
