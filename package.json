@@ -59,5 +59,14 @@
   },
   "files": [
     "dist"
+  ],
+  "keywords": [
+    "paypal",
+    "paypal buttons",
+    "paypal checkout",
+    "payment",
+    "react",
+    "typescript",
+    "npm"
   ]
 }
