@@ -27,7 +27,7 @@ import 'react-paypal-checkout-button/dist/index.css'
 const App = () => {
   return (
     <PayPalCheckout
-      clientId='axew*******************&*&******'
+      clientId='axew**************************'
       amount={100}
       currency='USD'
       handleSuccessfulPayment={(data, order) => {
