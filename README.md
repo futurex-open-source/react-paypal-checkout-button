@@ -69,6 +69,7 @@ we hope to make this package the first option whenever it comes to implemeting p
 - commit your changes: `git commit -am 'Some commit message`
 - Push to the branch: `git push origin feature-name`
 - Submit a pull request :muscle:
+- Add your username to the [contributors' list](CONTRIBUTING.md) 😄 🥰
 
 ## License
 
