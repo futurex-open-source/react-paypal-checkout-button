@@ -1,10 +1,11 @@
 {
   "name": "react-paypal-checkout-button",
-  "version": "1.0.1",
+
+  "version": "1.1.3",
   "description": "A very simple, easy to use React button component for implementing paypal checkout",
   "author": "UcheSylvester",
   "license": "MIT",
-  "repository": "FutureX-Open-Source/react-paypal",
+  "repository": "FutureX-Open-Source/react-paypal-checkout-button",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.tsx",

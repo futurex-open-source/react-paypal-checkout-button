@@ -6,13 +6,13 @@ import 'react-paypal-checkout-button/dist/index.css'
 const App = () => {
   return (
     <PayPalCheckout
-      clientId='AXo8WDTPKkGnTDyx7K0tP3U4Kx-pLpbs8RFAh2ZVzAT09O9vVdBju3EMMichVoR_peEJgQUXhDClSb0p'
+      clientId={process.env.REACT_APP_PAYPAL_CLIENT_ID}
       amount={100}
       currency='USD'
       handleSuccessfulPayment={(data, order) => {
         console.log({ data, order })
       }}
-      handlePaymentError={(error) => {
+      handleError={(error) => {
         console.log({ error })
       }}
     />
