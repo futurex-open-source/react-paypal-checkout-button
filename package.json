@@ -1,5 +1,6 @@
 {
   "name": "react-paypal-checkout-button",
+
   "version": "1.1.3",
   "description": "A very simple, easy to use React button component for implementing paypal checkout",
   "author": "UcheSylvester",

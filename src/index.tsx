@@ -1,8 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from 'react'
+
 import ErrorContainer from './components/error-container.component'
 import Spinner from './components/spinner.component'
-import { PayPalCheckoutProps } from './types'
+import { OnApproveDataTypes, PayPalCheckoutProps } from './types'
 import styles from './styles.module.css'
 
 const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
@@ -113,7 +114,7 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
                 ]
               })
             },
-            onApprove: async (data: any, actions: any) => {
+            onApprove: async (data: OnApproveDataTypes, actions: any) => {
               const order = await actions.order.capture()
 
               handleSuccessfulPayment && handleSuccessfulPayment(data, order)

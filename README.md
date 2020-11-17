@@ -22,22 +22,56 @@ yarn add react-paypal-checkout-button
 import React from 'react'
 
 import PayPalCheckout from 'react-paypal-checkout-button'
+<<<<<<< HEAD
 import 'react-paypal-checkout-button/dist/index.css'
+=======
+import 'react-paypal/dist/index.css'
+>>>>>>> main
 
 const App = () => {
   return (
     <PayPalCheckout
+<<<<<<< HEAD
       clientId='axew*******************&*&******'
+=======
+      clientId='Ae*****WD*******************'
+>>>>>>> main
       amount={100}
       currency='USD'
       handleSuccessfulPayment={(data, order) => {
         console.log({ data, order })
       }}
+<<<<<<< HEAD
       handleError={(error) => {
+=======
+      handlePaymentError={(error) => {
+>>>>>>> main
         console.log({ error })
       }}
     />
   )
+<<<<<<< HEAD
+=======
+}
+
+export default App
+```
+
+### Types
+
+All relevant types are bundled and exported with the npm package
+
+```
+type PayPalCheckoutProps = {
+  clientId: string
+  amount: number
+  currency: string
+  handleSuccessfulPayment?: (
+    data: OnApproveDataTypes,
+    order: OrderObjectTypes
+  ) => void
+  handlePaymentError?: (error: any) => void
+>>>>>>> main
 }
 
 export default App
