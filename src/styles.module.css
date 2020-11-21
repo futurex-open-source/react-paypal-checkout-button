@@ -28,17 +28,16 @@ body {
   max-width: 120px;
   width: 100%;
   height: 2.5rem;
-  background-color: white;
   border: none;
-  color: black;
+  color: white;
   font-size: 0.7rem;
   box-shadow: var(--box-shadow);
   text-transform: uppercase;
-  border-radius: 5px;
+  border-radius: 2px;
   cursor: pointer;
   transition: all 0.5s linear;
-  background-color: var(--paypal-color-light);
-  margin-top: 1rem;
+  background-color: var(--paypal-color);
+  margin-top: 0.5rem;
 }
 
 .retry-button:hover {
@@ -46,14 +45,14 @@ body {
 }
 
 .spinner {
-  width: 30px;
-  height: 30px;
+  width: 45px;
+  height: 45px;
   margin: auto;
   margin-top: 1rem;
   border-radius: 50%;
   animation: spin 1s ease-in-out infinite;
   -webkit-animation: spin 1s ease-in-out infinite;
-  border: 3px solid var(--spinner-color);
+  border: 4px solid var(--spinner-color);
   border-top-color: var(--paypal-color);
 }
 
