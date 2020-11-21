@@ -34,7 +34,6 @@ export type PayPalCheckoutOptions = {
   amount: number
   currency?: string
   description?: string
-  payer?: object
   purchase_units?: PurchaseUnit[]
 }
 
@@ -46,7 +45,7 @@ export type PayPalCheckoutProps = PayPalCheckoutOptions & {
 export type ErrorContainerProps = {
   errorMessage: string
   onRetry: () => void
-  shouldRetry: boolean
+  // shouldRetry: boolean
 }
 
 export type SpinnerProps = {
@@ -58,4 +57,8 @@ export type UsePayPalScriptOptions = {
   currency: string
   intent?: IntentOptions
   onError?: (error: any) => void
+}
+
+export type UsePayPalOptions = PayPalCheckoutProps & {
+  paypalRef: any
 }

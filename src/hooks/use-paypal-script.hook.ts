@@ -13,23 +13,16 @@ const usePayPalScript = ({
   const [scriptState, setScriptState] = useState({
     loading: false,
     loaded: false,
-    error: {
-      errorMessage: '',
-      shouldRetry: false
-    }
+    errorMessage: ''
   })
 
-  const {
-    loading,
-    loaded,
-    error: { errorMessage }
-  } = scriptState
+  const { loading, loaded, errorMessage } = scriptState
 
   useEffect(() => {
     if (errorMessage) return
 
     if (!clientId) {
-      const errorMessage = 'Client id is missing'
+      const errorMessage = 'Client Id is required to load PayPal Smart Button'
       onError && onError(new Error(errorMessage))
 
       console.error(errorMessage)
@@ -37,10 +30,7 @@ const usePayPalScript = ({
       return setScriptState({
         loading: false,
         loaded: false,
-        error: {
-          errorMessage,
-          shouldRetry: false
-        }
+        errorMessage
       })
     }
 
@@ -66,10 +56,7 @@ const usePayPalScript = ({
         return setScriptState({
           loading: false,
           loaded: false,
-          error: {
-            errorMessage: `An error occured while loading paypal smart buttons`,
-            shouldRetry: true
-          }
+          errorMessage: `An error occured while loading paypal smart buttons`
         })
       })
     }
