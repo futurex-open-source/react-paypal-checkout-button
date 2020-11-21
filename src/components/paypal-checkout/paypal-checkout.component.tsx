@@ -6,7 +6,7 @@ import ErrorContainer from '../error-container.component'
 import Spinner from '../spinner.component'
 
 import styles from '../../styles.module.css'
-import usePayPalCheckout from '../../hooks/use-paypal.hook'
+import usePayPalCheckout from '../../hooks/use-paypal-checkout.hook'
 
 const PayPalCheckout: React.FC<PayPalCheckoutProps> = (props) => {
   const paypalRef = useRef(null)
