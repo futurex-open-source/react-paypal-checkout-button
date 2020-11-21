@@ -10,6 +10,13 @@ const App = () => {
       clientId={process.env.REACT_APP_PAYPAL_CLIENT_ID}
       amount={100}
       currency='USD'
+      purchase_units={[
+        {
+          amount: {
+            value: 40
+          }
+        }
+      ]}
       onSuccess={(data, order) => {
         console.log({ data, order })
       }}

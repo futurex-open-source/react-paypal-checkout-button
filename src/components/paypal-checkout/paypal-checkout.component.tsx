@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useRef } from 'react'
 import usePayPalScript from '../../hooks/use-paypal-script.hook'
@@ -12,6 +13,8 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
   amount,
   currency = 'USD',
   intent = 'CAPTURE',
+  purchase_units,
+  description,
   onSuccess,
   onError
 }) => {
@@ -35,18 +38,22 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
   } = scriptState
 
   const createOrder = (data: any, actions: any) => {
+    const purchaseUnits = purchase_units?.length
+      ? purchase_units
+      : [
+          {
+            description: description || 'payment',
+            amount: {
+              currency,
+              value: amount
+            }
+          }
+        ]
+
     console.log({ data, actions })
     return actions.order.create({
       intent,
-      purchase_units: [
-        {
-          description: 'Payment',
-          amount: {
-            currency,
-            value: amount
-          }
-        }
-      ]
+      purchase_units: purchaseUnits
     })
   }
 

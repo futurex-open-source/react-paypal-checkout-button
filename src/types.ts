@@ -25,15 +25,18 @@ export type OrderObjectTypes = {
 
 export type PurchaseUnit = {
   description?: string
-  amount: number
-  currency: string
+  amount: { currency?: string; value: number }
 }
 
 export type PayPalCheckoutOptions = {
   intent?: IntentOptions
   clientId?: string
+  amount: number
+  currency?: string
+  description?: string
+  payer?: object
   purchase_units?: PurchaseUnit[]
-} & PurchaseUnit
+}
 
 export type PayPalCheckoutProps = PayPalCheckoutOptions & {
   onSuccess?: (data: OnApproveDataTypes, order: OrderObjectTypes) => void
