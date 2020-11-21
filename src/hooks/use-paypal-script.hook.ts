@@ -10,13 +10,13 @@ const usePayPalScript = ({
 }: UsePayPalScriptOptions) => {
   const INTENT = intent ? `&intent=${intent?.toLocaleLowerCase()}` : ''
 
-  const [scriptState, setScriptState] = useState({
-    loading: false,
-    loaded: false,
+  const [buttonState, setButtonState] = useState({
+    isLoadingButton: false,
+    buttonLoaded: false,
     errorMessage: ''
   })
 
-  const { loading, loaded, errorMessage } = scriptState
+  const { isLoadingButton, buttonLoaded, errorMessage } = buttonState
 
   useEffect(() => {
     if (errorMessage) return
@@ -27,23 +27,25 @@ const usePayPalScript = ({
 
       console.error(errorMessage)
 
-      return setScriptState({
-        loading: false,
-        loaded: false,
+      return setButtonState({
+        isLoadingButton: false,
+        buttonLoaded: false,
         errorMessage
       })
     }
 
-    // console.log({ ScriptState })
-
-    if (!loading && !loaded && !errorMessage) {
-      setScriptState((prev) => ({ ...prev, loading: true }))
+    if (!isLoadingButton && !buttonLoaded && !errorMessage) {
+      setButtonState((prev) => ({ ...prev, isLoadingButton: true }))
 
       const script = document.createElement('script')
       script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=${currency}${INTENT}`
 
       script.addEventListener('load', () =>
-        setScriptState((prev) => ({ ...prev, loading: false, loaded: true }))
+        setButtonState((prev) => ({
+          ...prev,
+          isLoadingButton: false,
+          buttonLoaded: true
+        }))
       )
 
       document.body.appendChild(script)
@@ -53,18 +55,18 @@ const usePayPalScript = ({
 
         onError && onError(error)
 
-        return setScriptState({
-          loading: false,
-          loaded: false,
-          errorMessage: `An error occured while loading paypal smart buttons`
+        return setButtonState({
+          isLoadingButton: false,
+          buttonLoaded: false,
+          errorMessage: `An error occured while isLoadingButton paypal smart buttons`
         })
       })
     }
-  }, [scriptState])
+  }, [buttonState])
 
   return {
-    scriptState,
-    setScriptState
+    buttonState,
+    setButtonState
   }
 }
 

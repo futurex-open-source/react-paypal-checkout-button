@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import PayPalCheckout, { usePayPal } from 'react-paypal-checkout-button'
+import PayPalCheckout, { usePayPalCheckout } from 'react-paypal-checkout-button'
 
 export const UsingComponent = () => (
   <PayPalCheckout
@@ -19,7 +19,12 @@ export const UsingComponent = () => (
 export const UsingHook = () => {
   const paypalRef = useRef(null)
 
-  const { isLoadingButton, errorMessage, onRetry, buttonLoaded } = usePayPal({
+  const {
+    isLoadingButton,
+    errorMessage,
+    buttonLoaded,
+    onRetry
+  } = usePayPalCheckout({
     amount: 100,
     paypalRef,
     clientId: process.env.REACT_APP_PAYPAL_CLIENT_ID,
@@ -31,12 +36,12 @@ export const UsingHook = () => {
     }
   })
 
-  if (isLoadingButton) return <h1>Loading....</h1>
+  if (isLoadingButton) return <h3>Loading...</h3>
 
   if (errorMessage)
     return (
       <div>
-        <h1>{errorMessage}</h1>
+        <h2>{errorMessage}</h2>
 
         <button onClick={onRetry}>Try Again</button>
       </div>

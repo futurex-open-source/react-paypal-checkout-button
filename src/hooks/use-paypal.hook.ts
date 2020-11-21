@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 import { OnApproveDataTypes, UsePayPalOptions } from '../types'
 import usePayPalScript from './use-paypal-script.hook'
 
-const usePayPal = (options: UsePayPalOptions) => {
+const usePayPalCheckout = (options: UsePayPalOptions) => {
   const GlobalWindow: any = window
 
   const {
@@ -20,20 +20,20 @@ const usePayPal = (options: UsePayPalOptions) => {
     paypalRef
   } = options
 
-  const { scriptState, setScriptState } = usePayPalScript({
+  const { buttonState, setButtonState } = usePayPalScript({
     clientId,
     currency,
     onError,
     intent
   })
 
-  const { loading, loaded, errorMessage } = scriptState
+  const { isLoadingButton, buttonLoaded, errorMessage } = buttonState
 
   const onRetry = () => {
-    setScriptState({
-      loaded: false,
-      loading: false,
-      errorMessage
+    setButtonState({
+      buttonLoaded: false,
+      isLoadingButton: false,
+      errorMessage: ''
     })
   }
 
@@ -77,15 +77,21 @@ const usePayPal = (options: UsePayPalOptions) => {
   useEffect(() => {
     // console.log({ scriptState })
 
-    if (loaded && !loading && !errorMessage && paypalRef?.current) {
+    if (
+      buttonLoaded &&
+      !isLoadingButton &&
+      !errorMessage &&
+      paypalRef?.current
+    ) {
       if (!GlobalWindow?.paypal) {
-        const errorMessage = 'PayPal button was not loaded successfully...'
+        const errorMessage =
+          'PayPal button was not buttonLoaded successfully...'
 
         onError && onError(new Error(errorMessage))
 
-        return setScriptState({
-          loading: false,
-          loaded: false,
+        return setButtonState({
+          isLoadingButton: false,
+          buttonLoaded: false,
           errorMessage
         })
       }
@@ -100,14 +106,12 @@ const usePayPal = (options: UsePayPalOptions) => {
           .render(paypalRef.current)
       })
     }
-  }, [scriptState])
+  }, [buttonState])
 
   return {
-    isLoadingButton: loading && !loaded && !errorMessage,
-    buttonLoaded: loaded,
-    errorMessage,
+    ...buttonState,
     onRetry
   }
 }
 
-export default usePayPal
+export default usePayPalCheckout
