@@ -22,7 +22,7 @@ export type OrderObjectTypes = {
 }
 
 export type PayPalCheckoutProps = {
-  clientId: string
+  clientId?: string
   amount: number
   currency?: string
   handleSuccessfulPayment?: (
