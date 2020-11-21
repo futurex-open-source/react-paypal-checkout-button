@@ -1,6 +1,6 @@
 # React-Paypal-Checkout-Button
 
-> A very simple, easy to use React button component for implementing paypal checkout
+> A very simple, easy to use React button component for implementing paypal checkout now enhanced with the power of Custom Hooks 🔥 🔥
 
 [![NPM](https://img.shields.io/npm/v/react-paypal-checkout-button.svg)](https://www.npmjs.com/package/react-paypal-checkout-button) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
@@ -18,6 +18,49 @@ yarn add react-paypal-checkout-button
 
 ## Usage
 
+#### Hooks
+
+```tsx
+import { useRef } from 'react'
+import { usePayPalCheckout } from 'react-paypal-checkout-button'
+
+const paypalRef = useRef(null)
+
+const {
+  isLoadingButton,
+  errorMessage,
+  buttonLoaded,
+  onRetry
+} = usePayPalCheckout({
+  clientId: 'a*****************************',
+  paypalRef,
+  amount: 100,
+  currency: 'USD',
+  onSuccess: (data, order) => {
+    console.log({ data, order })
+  },
+  onError: (error) => {
+    console.log({ error })
+  }
+
+
+  if (isLoadingButton) return <p>Loading...</p>
+
+  if (errorMessage)
+    return (
+      <div>
+        <p>{errorMessage}</p>
+
+        <button onClick={onRetry}>Try Again</button>
+      </div>
+    )
+
+  return buttonLoaded ? <div ref={paypalRef} /> : null
+})
+```
+
+#### Components
+
 ```tsx
 import React from 'react'
 
@@ -27,13 +70,13 @@ import 'react-paypal-checkout-button/dist/index.css'
 const App = () => {
   return (
     <PayPalCheckout
-      clientId='axew**************************'
+      clientId='a*****************************'
       amount={100}
       currency='USD'
-      handleSuccessfulPayment={(data, order) => {
+      onSuccess={(data, order) => {
         console.log({ data, order })
       }}
-      handleError={(error) => {
+      onError={(error) => {
         console.log({ error })
       }}
     />
@@ -48,15 +91,19 @@ export default App
 All relevant types are bundled and exported with the npm package
 
 ```
-type PayPalCheckoutProps = {
-  clientId: string
+type type PayPalCheckoutProps = {
+  intent?: IntentOptions // 'CAPTURE' | 'AUTHORIZE'
+  clientId?: string
   amount: number
-  currency: string
-  handleSuccessfulPayment?: (
-    data: OnApproveDataTypes,
-    order: OrderObjectTypes
-  ) => void
-  handlePaymentError?: (error: any) => void
+  currency?: string
+  description?: string
+  buttonStyles?: StylesOptions
+  onSuccess?: (data: OnApproveDataTypes, order: OrderObjectTypes) => void
+  onError?: (error: any) => void
+}
+
+type UsePayPalCheckoutOptions = PayPalCheckoutProps & {
+  paypalRef: any
 }
 ```
 

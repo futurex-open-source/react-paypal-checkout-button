@@ -98,6 +98,6 @@ export type UsePayPalScriptOptions = {
   onError?: (error: any) => void
 }
 
-export type UsePayPalOptions = PayPalCheckoutProps & {
+export type UsePayPalCheckoutOptions = PayPalCheckoutProps & {
   paypalRef: any
 }

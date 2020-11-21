@@ -3,10 +3,10 @@
 // eslint-disable-next-line no-unused-vars
 
 import { useEffect } from 'react'
-import { OnApproveDataTypes, UsePayPalOptions } from '../types'
+import { OnApproveDataTypes, UsePayPalCheckoutOptions } from '../types'
 import usePayPalScript from './use-paypal-script.hook'
 
-const usePayPalCheckout = (options: UsePayPalOptions) => {
+const usePayPalCheckout = (options: UsePayPalCheckoutOptions) => {
   const GlobalWindow: any = window
 
   const {

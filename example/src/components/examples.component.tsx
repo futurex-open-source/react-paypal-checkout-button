@@ -1,18 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useRef } from 'react'
-import PayPalCheckout, {
-  usePayPalCheckout,
-  StylesOptions
-} from 'react-paypal-checkout-button'
+import PayPalCheckout, { usePayPalCheckout } from 'react-paypal-checkout-button'
 
-const buttonStyles: StylesOptions = {
-  layout: 'vertical',
-  color: 'blue',
-  shape: 'pill',
-  label: 'buynow',
-  height: 55,
-  tagline: false
-}
+// const buttonStyles: StylesOptions = {
+//   layout: 'vertical',
+//   color: 'blue',
+//   shape: 'pill',
+//   label: 'buynow',
+//   height: 55,
+//   tagline: false
+// }
 
 export const UsingComponent = () => {
   return (
@@ -21,7 +18,7 @@ export const UsingComponent = () => {
       clientId={process.env.REACT_APP_PAYPAL_CLIENT_ID}
       amount={100}
       currency='USD'
-      buttonStyles={buttonStyles}
+      // buttonStyles={buttonStyles}
       onSuccess={(data, order) => {
         console.log({ data, order })
       }}
@@ -43,7 +40,7 @@ export const UsingHook = () => {
   } = usePayPalCheckout({
     amount: 100,
     paypalRef,
-    buttonStyles,
+    // buttonStyles,
     clientId: process.env.REACT_APP_PAYPAL_CLIENT_ID,
     onSuccess: (data, order) => {
       console.log({ data, order })
