@@ -1,5 +1,7 @@
 /* eslint-disable camelcase */
 
+export type IntentOptions = 'CAPTURE' | 'AUTHORIZE'
+
 export type OnApproveDataTypes = {
   orderID: string
   payerID: string
@@ -25,6 +27,7 @@ export type PayPalCheckoutProps = {
   clientId?: string
   amount: number
   currency?: string
+  intent?: IntentOptions
   handleSuccessfulPayment?: (
     data: OnApproveDataTypes,
     order: OrderObjectTypes
@@ -45,5 +48,6 @@ export type SpinnerProps = {
 export type UsePayPalScriptOptions = {
   clientId?: string
   currency: string
+  intent?: IntentOptions
   handleError?: (error: any) => void
 }

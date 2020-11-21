@@ -11,17 +11,21 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
   clientId,
   amount,
   currency = 'USD',
+  intent = 'CAPTURE',
   handleSuccessfulPayment,
   handleError
 }) => {
   const paypalRef = useRef(null)
+
+  // console.log({ intent })
 
   const GlobalWindow: any = window
 
   const { loadState, setLoadState } = usePayPalScript({
     clientId,
     currency,
-    handleError
+    handleError,
+    intent
   })
 
   const {
@@ -33,7 +37,7 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
   const createOrder = (data: any, actions: any) => {
     console.log({ data, actions })
     return actions.order.create({
-      intent: 'CAPTURE',
+      intent,
       purchase_units: [
         {
           description: 'Payment',
@@ -47,13 +51,18 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
   }
 
   const onError = (error: any) => {
-    console.error(error)
+    console.error({ error })
 
     handleError && handleError(error)
   }
 
   const onApprove = async (data: OnApproveDataTypes, actions: any) => {
-    const order = await actions.order.capture()
+    const getOrder = () => {
+      if (intent === 'AUTHORIZE') return actions.order.authorize()
+
+      return actions.order.capture()
+    }
+    const order = await getOrder()
 
     handleSuccessfulPayment && handleSuccessfulPayment(data, order)
   }

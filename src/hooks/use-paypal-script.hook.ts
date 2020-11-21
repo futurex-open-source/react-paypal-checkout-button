@@ -5,8 +5,12 @@ import { UsePayPalScriptOptions } from '../types'
 const usePayPalScript = ({
   clientId,
   currency,
-  handleError
+  handleError,
+  intent
 }: UsePayPalScriptOptions) => {
+  const AUTHORIZE_INTENT =
+    intent === 'AUTHORIZE' ? intent?.toLocaleLowerCase() : ''
+
   const [loadState, setLoadState] = useState({
     loading: false,
     loaded: false,
@@ -47,7 +51,7 @@ const usePayPalScript = ({
       setLoadState((prev) => ({ ...prev, loading: true }))
 
       const script = document.createElement('script')
-      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=${currency}`
+      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=${currency}&intent=${AUTHORIZE_INTENT}`
 
       script.addEventListener('load', () =>
         setLoadState((prev) => ({ ...prev, loading: false, loaded: true }))
@@ -64,7 +68,7 @@ const usePayPalScript = ({
           loading: false,
           loaded: false,
           error: {
-            errorMessage: `An error occured while loading script...`,
+            errorMessage: `An error occured while loading paypal smart buttons`,
             shouldRetry: true
           }
         })
