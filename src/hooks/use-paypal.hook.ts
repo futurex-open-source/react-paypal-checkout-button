@@ -103,7 +103,7 @@ const usePayPal = (options: UsePayPalOptions) => {
   }, [scriptState])
 
   return {
-    isLoadingButton: loading,
+    isLoadingButton: loading && !loaded && !errorMessage,
     buttonLoaded: loaded,
     errorMessage,
     onRetry

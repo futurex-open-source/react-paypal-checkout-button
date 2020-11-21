@@ -17,13 +17,12 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = (props) => {
   })
 
   const renderReactPayPal = () => {
-    if (!buttonLoaded && isLoadingButton && !errorMessage)
-      return <Spinner isLoading={isLoadingButton} />
+    if (isLoadingButton) return <Spinner isLoading={isLoadingButton} />
 
     if (errorMessage)
       return <ErrorContainer errorMessage={errorMessage} onRetry={onRetry} />
 
-    return <div ref={paypalRef} />
+    return buttonLoaded ? <div ref={paypalRef} /> : null
   }
 
   return <div className={styles.container}>{renderReactPayPal()}</div>
