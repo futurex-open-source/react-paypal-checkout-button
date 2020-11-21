@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 // eslint-disable-next-line no-unused-vars
-import { UsePayPalScriptOptions } from '../types'
+import { ButtonState, UsePayPalScriptOptions } from '../types'
 
 const usePayPalScript = ({
   clientId,
@@ -10,7 +10,7 @@ const usePayPalScript = ({
 }: UsePayPalScriptOptions) => {
   const INTENT = intent ? `&intent=${intent?.toLocaleLowerCase()}` : ''
 
-  const [buttonState, setButtonState] = useState({
+  const [buttonState, setButtonState] = useState<ButtonState>({
     isLoadingButton: false,
     buttonLoaded: false,
     errorMessage: ''

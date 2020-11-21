@@ -1,6 +1,6 @@
 # React-Paypal-Checkout-Button
 
-> A very simple, easy to use React button component for implementing paypal checkout now enhanced with the power of Custom Hooks 🔥 🔥
+> A very simple, easy to use React button component for implementing paypal checkout, now enhanced with the power of Custom Hooks 🔥 🔥
 
 [![NPM](https://img.shields.io/npm/v/react-paypal-checkout-button.svg)](https://www.npmjs.com/package/react-paypal-checkout-button) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
@@ -37,10 +37,10 @@ const {
   amount: 100,
   currency: 'USD',
   onSuccess: (data, order) => {
-    console.log({ data, order })
+    console.log(data, order)
   },
   onError: (error) => {
-    console.log({ error })
+    console.log(error)
   }
 
 
@@ -74,10 +74,10 @@ const App = () => {
       amount={100}
       currency='USD'
       onSuccess={(data, order) => {
-        console.log({ data, order })
+        console.log(data, order)
       }}
       onError={(error) => {
-        console.log({ error })
+        console.log(error)
       }}
     />
   )
@@ -91,6 +91,7 @@ export default App
 All relevant types are bundled and exported with the npm package
 
 ```
+/********PayPalCheckout Types**********/
 type type PayPalCheckoutProps = {
   intent?: IntentOptions // 'CAPTURE' | 'AUTHORIZE'
   clientId?: string
@@ -102,9 +103,24 @@ type type PayPalCheckoutProps = {
   onError?: (error: any) => void
 }
 
+
+/********usePayPalCheckout Types**********/
 type UsePayPalCheckoutOptions = PayPalCheckoutProps & {
   paypalRef: any
 }
+
+export type ButtonState = {
+  isLoadingButton: boolean
+  buttonLoaded: boolean
+  errorMessage: string
+}
+
+export type UsePayPalCheckoutValues = ButtonState & {
+  onRetry: () => void
+}
+
+
+
 ```
 
 ## Contributing

@@ -101,3 +101,13 @@ export type UsePayPalScriptOptions = {
 export type UsePayPalCheckoutOptions = PayPalCheckoutProps & {
   paypalRef: any
 }
+
+export type ButtonState = {
+  isLoadingButton: boolean
+  buttonLoaded: boolean
+  errorMessage: string
+}
+
+export type UsePayPalCheckoutValues = ButtonState & {
+  onRetry: () => void
+}

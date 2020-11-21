@@ -3,10 +3,16 @@
 // eslint-disable-next-line no-unused-vars
 
 import { useEffect } from 'react'
-import { OnApproveDataTypes, UsePayPalCheckoutOptions } from '../types'
+import {
+  OnApproveDataTypes,
+  UsePayPalCheckoutOptions,
+  UsePayPalCheckoutValues
+} from '../types'
 import usePayPalScript from './use-paypal-script.hook'
 
-const usePayPalCheckout = (options: UsePayPalCheckoutOptions) => {
+const usePayPalCheckout = (
+  options: UsePayPalCheckoutOptions
+): UsePayPalCheckoutValues => {
   const GlobalWindow: any = window
 
   const {
@@ -20,8 +26,6 @@ const usePayPalCheckout = (options: UsePayPalCheckoutOptions) => {
     onError,
     paypalRef
   } = options
-
-  console.log({ buttonStyles })
 
   const { buttonState, setButtonState } = usePayPalScript({
     clientId,
@@ -71,6 +75,7 @@ const usePayPalCheckout = (options: UsePayPalCheckoutOptions) => {
 
       return actions.order.capture()
     }
+
     const order = await getOrder()
 
     onSuccess && onSuccess(data, order)
