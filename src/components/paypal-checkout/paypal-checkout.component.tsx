@@ -12,8 +12,8 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
   amount,
   currency = 'USD',
   intent = 'CAPTURE',
-  handleSuccessfulPayment,
-  handleError
+  onSuccess,
+  onError
 }) => {
   const paypalRef = useRef(null)
 
@@ -21,10 +21,10 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
 
   const GlobalWindow: any = window
 
-  const { loadState, setLoadState } = usePayPalScript({
+  const { scriptState, setScriptState } = usePayPalScript({
     clientId,
     currency,
-    handleError,
+    onError,
     intent
   })
 
@@ -32,7 +32,7 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
     loading,
     loaded,
     error: { errorMessage, shouldRetry }
-  } = loadState
+  } = scriptState
 
   const createOrder = (data: any, actions: any) => {
     console.log({ data, actions })
@@ -50,10 +50,10 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
     })
   }
 
-  const onError = (error: any) => {
+  const errorHandler = (error: any) => {
     console.error({ error })
 
-    handleError && handleError(error)
+    onError && onError(error)
   }
 
   const onApprove = async (data: OnApproveDataTypes, actions: any) => {
@@ -64,19 +64,19 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
     }
     const order = await getOrder()
 
-    handleSuccessfulPayment && handleSuccessfulPayment(data, order)
+    onSuccess && onSuccess(data, order)
   }
 
   useEffect(() => {
-    // console.log({ loadState })
+    // console.log({ scriptState })
 
     if (loaded && !loading && !errorMessage) {
       if (!GlobalWindow.paypal) {
         const errorMessage = "PayPal doesn't not exist in global scope"
 
-        handleError && handleError(new Error(errorMessage))
+        onError && onError(new Error(errorMessage))
 
-        return setLoadState({
+        return setScriptState({
           loading: false,
           loaded: false,
           error: {
@@ -91,15 +91,15 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
           .Buttons({
             createOrder,
             onApprove,
-            onError
+            onError: errorHandler
           })
           .render(paypalRef.current)
       })
     }
-  }, [loadState])
+  }, [scriptState])
 
   const onRetry = () => {
-    setLoadState({
+    setScriptState({
       loaded: false,
       loading: false,
       error: { errorMessage: '', shouldRetry: true }
@@ -108,7 +108,7 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
 
   const renderReactPayPal = () => {
     if (!loaded && loading && !errorMessage)
-      return <Spinner isLoading={loadState.loading} />
+      return <Spinner isLoading={scriptState.loading} />
 
     if (errorMessage)
       return (

@@ -23,16 +23,21 @@ export type OrderObjectTypes = {
   purchase_units: Array<object>
 }
 
-export type PayPalCheckoutProps = {
-  clientId?: string
+export type PurchaseUnit = {
+  description?: string
   amount: number
-  currency?: string
+  currency: string
+}
+
+export type PayPalCheckoutOptions = {
   intent?: IntentOptions
-  handleSuccessfulPayment?: (
-    data: OnApproveDataTypes,
-    order: OrderObjectTypes
-  ) => void
-  handleError?: (error: any) => void
+  clientId?: string
+  purchase_units?: PurchaseUnit[]
+} & PurchaseUnit
+
+export type PayPalCheckoutProps = PayPalCheckoutOptions & {
+  onSuccess?: (data: OnApproveDataTypes, order: OrderObjectTypes) => void
+  onError?: (error: any) => void
 }
 
 export type ErrorContainerProps = {
@@ -49,5 +54,5 @@ export type UsePayPalScriptOptions = {
   clientId?: string
   currency: string
   intent?: IntentOptions
-  handleError?: (error: any) => void
+  onError?: (error: any) => void
 }

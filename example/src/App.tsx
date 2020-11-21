@@ -6,14 +6,14 @@ import 'react-paypal-checkout-button/dist/index.css'
 const App = () => {
   return (
     <PayPalCheckout
-      intent='AUTHORIZE'
+      // intent='AUTHORIZE'
       clientId={process.env.REACT_APP_PAYPAL_CLIENT_ID}
       amount={100}
       currency='USD'
-      handleSuccessfulPayment={(data, order) => {
+      onSuccess={(data, order) => {
         console.log({ data, order })
       }}
-      handleError={(error) => {
+      onError={(error) => {
         console.log({ error })
       }}
     />

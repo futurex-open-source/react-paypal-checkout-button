@@ -5,13 +5,12 @@ import { UsePayPalScriptOptions } from '../types'
 const usePayPalScript = ({
   clientId,
   currency,
-  handleError,
+  onError,
   intent
 }: UsePayPalScriptOptions) => {
-  const INTENT =
-    intent === 'AUTHORIZE' ? `&intent=${intent?.toLocaleLowerCase()}` : ''
+  const INTENT = intent ? `&intent=${intent?.toLocaleLowerCase()}` : ''
 
-  const [loadState, setLoadState] = useState({
+  const [scriptState, setScriptState] = useState({
     loading: false,
     loaded: false,
     error: {
@@ -24,18 +23,18 @@ const usePayPalScript = ({
     loading,
     loaded,
     error: { errorMessage }
-  } = loadState
+  } = scriptState
 
   useEffect(() => {
     if (errorMessage) return
 
     if (!clientId) {
       const errorMessage = 'Client id is missing'
-      handleError && handleError(new Error(errorMessage))
+      onError && onError(new Error(errorMessage))
 
       console.error(errorMessage)
 
-      return setLoadState({
+      return setScriptState({
         loading: false,
         loaded: false,
         error: {
@@ -45,16 +44,16 @@ const usePayPalScript = ({
       })
     }
 
-    // console.log({ loadState })
+    // console.log({ ScriptState })
 
     if (!loading && !loaded && !errorMessage) {
-      setLoadState((prev) => ({ ...prev, loading: true }))
+      setScriptState((prev) => ({ ...prev, loading: true }))
 
       const script = document.createElement('script')
       script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=${currency}${INTENT}`
 
       script.addEventListener('load', () =>
-        setLoadState((prev) => ({ ...prev, loading: false, loaded: true }))
+        setScriptState((prev) => ({ ...prev, loading: false, loaded: true }))
       )
 
       document.body.appendChild(script)
@@ -62,9 +61,9 @@ const usePayPalScript = ({
       script.addEventListener('error', (error) => {
         console.error(error)
 
-        handleError && handleError(error)
+        onError && onError(error)
 
-        return setLoadState({
+        return setScriptState({
           loading: false,
           loaded: false,
           error: {
@@ -74,11 +73,11 @@ const usePayPalScript = ({
         })
       })
     }
-  }, [loadState])
+  }, [scriptState])
 
   return {
-    loadState,
-    setLoadState
+    scriptState,
+    setScriptState
   }
 }
 
