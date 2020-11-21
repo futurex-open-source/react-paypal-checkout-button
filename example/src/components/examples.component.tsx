@@ -5,7 +5,7 @@ import PayPalCheckout, {
   StylesOptions
 } from 'react-paypal-checkout-button'
 
-const styles: StylesOptions = {
+const buttonStyles: StylesOptions = {
   layout: 'vertical',
   color: 'blue',
   shape: 'pill',
@@ -21,7 +21,7 @@ export const UsingComponent = () => {
       clientId={process.env.REACT_APP_PAYPAL_CLIENT_ID}
       amount={100}
       currency='USD'
-      // styles={styles}
+      buttonStyles={buttonStyles}
       onSuccess={(data, order) => {
         console.log({ data, order })
       }}
@@ -43,7 +43,7 @@ export const UsingHook = () => {
   } = usePayPalCheckout({
     amount: 100,
     paypalRef,
-    styles,
+    buttonStyles,
     clientId: process.env.REACT_APP_PAYPAL_CLIENT_ID,
     onSuccess: (data, order) => {
       console.log({ data, order })

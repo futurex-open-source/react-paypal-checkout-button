@@ -15,10 +15,13 @@ const usePayPalCheckout = (options: UsePayPalOptions) => {
     amount,
     description = 'payment',
     currency = 'USD',
+    buttonStyles,
     onSuccess,
     onError,
     paypalRef
   } = options
+
+  console.log({ buttonStyles })
 
   const { buttonState, setButtonState } = usePayPalScript({
     clientId,
@@ -98,6 +101,7 @@ const usePayPalCheckout = (options: UsePayPalOptions) => {
       setTimeout(() => {
         GlobalWindow.paypal
           .Buttons({
+            ...(buttonStyles && { style: buttonStyles }),
             createOrder,
             onApprove,
             onError: errorHandler
