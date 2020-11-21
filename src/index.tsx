@@ -30,6 +30,34 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
     error: { errorMessage, shouldRetry }
   } = loadState
 
+  const createOrder = (data: any, actions: any) => {
+    console.log({ data, actions })
+    return actions.order.create({
+      intent: 'CAPTURE',
+      purchase_units: [
+        {
+          description: 'Payment',
+          amount: {
+            currency,
+            value: amount
+          }
+        }
+      ]
+    })
+  }
+
+  const onError = (error: any) => {
+    console.error(error)
+
+    handleError && handleError(error)
+  }
+
+  const onApprove = async (data: OnApproveDataTypes, actions: any) => {
+    const order = await actions.order.capture()
+
+    handleSuccessfulPayment && handleSuccessfulPayment(data, order)
+  }
+
   useEffect(() => {
     // console.log({ loadState })
 
@@ -52,31 +80,9 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
       setTimeout(() => {
         GlobalWindow.paypal
           .Buttons({
-            createOrder: (data: any, actions: any) => {
-              console.log({ data, actions })
-              return actions.order.create({
-                intent: 'CAPTURE',
-                purchase_units: [
-                  {
-                    description: 'Payment',
-                    amount: {
-                      currency,
-                      value: amount
-                    }
-                  }
-                ]
-              })
-            },
-            onApprove: async (data: OnApproveDataTypes, actions: any) => {
-              const order = await actions.order.capture()
-
-              handleSuccessfulPayment && handleSuccessfulPayment(data, order)
-            },
-            onError: (error: any) => {
-              console.error(error)
-
-              handleError && handleError(error)
-            }
+            createOrder,
+            onApprove,
+            onError
           })
           .render(paypalRef.current)
       })

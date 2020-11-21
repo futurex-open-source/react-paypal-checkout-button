@@ -12,14 +12,6 @@ export type Payer = {
   payer_id: string
 }
 
-export type PurchaseUnit = {
-  description: string
-  amount: {
-    currency: string
-    value: number
-  }
-}
-
 export type OrderObjectTypes = {
   create_time: string
   id: string
@@ -27,11 +19,6 @@ export type OrderObjectTypes = {
   links: Array<object>
   payer: Payer
   purchase_units: Array<object>
-}
-
-export type CreateOrderOptionTypes = {
-  intent: string
-  purchase_units: Array<PurchaseUnit>
 }
 
 export type PayPalCheckoutProps = {
