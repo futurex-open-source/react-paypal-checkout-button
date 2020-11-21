@@ -8,8 +8,8 @@ const usePayPalScript = ({
   handleError,
   intent
 }: UsePayPalScriptOptions) => {
-  const AUTHORIZE_INTENT =
-    intent === 'AUTHORIZE' ? intent?.toLocaleLowerCase() : ''
+  const INTENT =
+    intent === 'AUTHORIZE' ? `&intent=${intent?.toLocaleLowerCase()}` : ''
 
   const [loadState, setLoadState] = useState({
     loading: false,
@@ -51,7 +51,7 @@ const usePayPalScript = ({
       setLoadState((prev) => ({ ...prev, loading: true }))
 
       const script = document.createElement('script')
-      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=${currency}&intent=${AUTHORIZE_INTENT}`
+      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=${currency}${INTENT}`
 
       script.addEventListener('load', () =>
         setLoadState((prev) => ({ ...prev, loading: false, loaded: true }))
