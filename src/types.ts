@@ -34,7 +34,6 @@ export type PayPalCheckoutOptions = {
   amount: number
   currency?: string
   description?: string
-  purchase_units?: PurchaseUnit[]
 }
 
 export type PayPalCheckoutProps = PayPalCheckoutOptions & {

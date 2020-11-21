@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
 // eslint-disable-next-line no-unused-vars
+
 import { useEffect } from 'react'
 import { OnApproveDataTypes, UsePayPalOptions } from '../types'
 import usePayPalScript from './use-paypal-script.hook'
@@ -12,9 +13,8 @@ const usePayPalCheckout = (options: UsePayPalOptions) => {
     clientId,
     intent = 'CAPTURE',
     amount,
-    description,
+    description = 'payment',
     currency = 'USD',
-    purchase_units,
     onSuccess,
     onError,
     paypalRef
@@ -38,22 +38,21 @@ const usePayPalCheckout = (options: UsePayPalOptions) => {
   }
 
   const createOrder = (data: any, actions: any) => {
-    const purchaseUnits = purchase_units?.length
-      ? purchase_units
-      : [
-          {
-            description: description || 'payment',
-            amount: {
-              currency,
-              value: amount
-            }
-          }
-        ]
+    const purchase_units = [
+      {
+        description: description,
+        amount: {
+          currency,
+          value: amount
+        }
+      }
+    ]
 
     console.log({ data, actions })
+
     return actions.order.create({
       intent,
-      purchase_units: purchaseUnits
+      purchase_units
     })
   }
 
