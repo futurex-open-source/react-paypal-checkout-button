@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 import ErrorContainer from './components/error-container.component'
 import Spinner from './components/spinner.component'
 import { OnApproveDataTypes, PayPalCheckoutProps } from './types'
 import styles from './styles.module.css'
+import usePayPalScript from './hooks/use-paypal-script.hook'
 
 const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
   clientId,
@@ -15,15 +16,13 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
 }) => {
   const paypalRef = useRef(null)
 
-  const [loadState, setLoadState] = useState({
-    loading: false,
-    loaded: false,
-    error: {
-      errorMessage: '',
-      shouldRetry: false
-    }
-  })
   const GlobalWindow: any = window
+
+  const { loadState, setLoadState } = usePayPalScript({
+    clientId,
+    currency,
+    handleError
+  })
 
   const {
     loading,
@@ -32,53 +31,7 @@ const PayPalCheckout: React.FC<PayPalCheckoutProps> = ({
   } = loadState
 
   useEffect(() => {
-    if (errorMessage) return
-
-    if (!clientId) {
-      const errorMessage = 'Client id is missing'
-      handleError && handleError(new Error(errorMessage))
-
-      console.error(errorMessage)
-
-      return setLoadState({
-        loading: false,
-        loaded: false,
-        error: {
-          errorMessage,
-          shouldRetry: false
-        }
-      })
-    }
-
     // console.log({ loadState })
-
-    if (!loading && !loaded && !errorMessage) {
-      setLoadState((prev) => ({ ...prev, loading: true }))
-
-      const script = document.createElement('script')
-      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=${currency}`
-
-      script.addEventListener('load', () =>
-        setLoadState((prev) => ({ ...prev, loading: false, loaded: true }))
-      )
-
-      document.body.appendChild(script)
-
-      script.addEventListener('error', (error) => {
-        console.error(error)
-
-        handleError && handleError(error)
-
-        return setLoadState({
-          loading: false,
-          loaded: false,
-          error: {
-            errorMessage: `An error occured while loading script...`,
-            shouldRetry: true
-          }
-        })
-      })
-    }
 
     if (loaded && !loading && !errorMessage) {
       if (!GlobalWindow.paypal) {

@@ -12,13 +12,26 @@ export type Payer = {
   payer_id: string
 }
 
+export type PurchaseUnit = {
+  description: string
+  amount: {
+    currency: string
+    value: number
+  }
+}
+
 export type OrderObjectTypes = {
   create_time: string
   id: string
-  intent: 'CAPTURE' | string
+  intent: string
   links: Array<object>
   payer: Payer
   purchase_units: Array<object>
+}
+
+export type CreateOrderOptionTypes = {
+  intent: string
+  purchase_units: Array<PurchaseUnit>
 }
 
 export type PayPalCheckoutProps = {
@@ -40,4 +53,10 @@ export type ErrorContainerProps = {
 
 export type SpinnerProps = {
   isLoading: boolean
+}
+
+export type UsePayPalScriptOptions = {
+  clientId?: string
+  currency: string
+  handleError?: (error: any) => void
 }
