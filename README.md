@@ -21,8 +21,11 @@ yarn add react-paypal-checkout-button
 #### Hooks
 
 ```tsx
-import { useRef } from 'react'
+import React, { useRef } from 'react'
 import { usePayPalCheckout } from 'react-paypal-checkout-button'
+
+
+const App = () => {
 
 const paypalRef = useRef(null)
 
@@ -57,6 +60,8 @@ const {
 
   return buttonLoaded ? <div ref={paypalRef} /> : null
 })
+
+export default App
 ```
 
 #### Components
