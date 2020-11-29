@@ -2,15 +2,6 @@
 import React, { useState } from 'react'
 import PayPalCheckout, { usePayPalCheckout } from 'react-paypal-checkout-button'
 
-// const buttonStyles: StylesOptions = {
-//   layout: 'vertical',
-//   color: 'blue',
-//   shape: 'pill',
-//   label: 'buynow',
-//   height: 55,
-//   tagline: false
-// }
-
 export const UsingComponent = () => {
   return (
     <PayPalCheckout
