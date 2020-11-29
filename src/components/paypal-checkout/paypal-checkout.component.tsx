@@ -1,36 +1,43 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
-import React, { useRef } from 'react'
+import React from 'react'
 import { PayPalCheckoutProps } from '../../types'
-import ErrorContainer from '../error-container.component'
-import Spinner from '../spinner.component'
 
 import styles from '../../styles.module.css'
 import usePayPalCheckout from '../../hooks/use-paypal-checkout.hook'
+import Spinner from '../spinner.component'
+import ErrorContainer from '../error-container.component'
 
 const PayPalCheckout: React.FC<PayPalCheckoutProps> = (props) => {
-  const paypalRef = useRef(null)
-
   const {
     isLoadingButton,
     buttonLoaded,
     errorMessage,
-    onRetry
+    onRetry,
+
+    paypalRef
   } = usePayPalCheckout({
-    paypalRef,
     ...props
   })
 
-  const renderReactPayPal = () => {
+  const renderReactPayPalStates = () => {
+    if (buttonLoaded) return
+
     if (isLoadingButton) return <Spinner isLoading={isLoadingButton} />
 
     if (errorMessage)
       return <ErrorContainer errorMessage={errorMessage} onRetry={onRetry} />
 
-    return buttonLoaded ? <div ref={paypalRef} /> : null
+    return null
   }
 
-  return <div className={styles.container}>{renderReactPayPal()}</div>
+  return (
+    <div className={styles.container}>
+      <div ref={paypalRef} />
+
+      {renderReactPayPalStates()}
+    </div>
+  )
 }
 
-export default PayPalCheckout
+export default React.memo(PayPalCheckout)

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useRef } from 'react'
+import React, { useState } from 'react'
 import PayPalCheckout, { usePayPalCheckout } from 'react-paypal-checkout-button'
 
 // const buttonStyles: StylesOptions = {
@@ -30,17 +30,10 @@ export const UsingComponent = () => {
 }
 
 export const UsingHook = () => {
-  const paypalRef = useRef(null)
+  const [show, setShow] = useState(false)
 
-  const {
-    isLoadingButton,
-    errorMessage,
-    buttonLoaded,
-    onRetry
-  } = usePayPalCheckout({
+  const { isLoadingButton, paypalRef } = usePayPalCheckout({
     amount: 100,
-    paypalRef,
-    // buttonStyles,
     clientId: process.env.REACT_APP_PAYPAL_CLIENT_ID,
     onSuccess: (data, order) => {
       console.log({ data, order })
@@ -50,16 +43,22 @@ export const UsingHook = () => {
     }
   })
 
-  if (isLoadingButton) return <h3>Loading...</h3>
+  return (
+    <>
+      <button
+        onClick={() => setShow(!show)}
+        style={{ margin: '2rem', background: 'white', padding: '10px' }}
+      >
+        {show ? 'hide button' : 'show button'}
+      </button>
 
-  if (errorMessage)
-    return (
-      <div>
-        <h2>{errorMessage}</h2>
+      {show && (
+        <>
+          <div ref={paypalRef} />
 
-        <button onClick={onRetry}>Try Again</button>
-      </div>
-    )
-
-  return buttonLoaded ? <div ref={paypalRef} /> : null
+          {isLoadingButton && <h3>loading...</h3>}
+        </>
+      )}
+    </>
+  )
 }

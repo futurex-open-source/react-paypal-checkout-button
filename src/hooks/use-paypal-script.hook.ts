@@ -6,7 +6,8 @@ const usePayPalScript = ({
   clientId,
   currency,
   onError,
-  intent
+  intent,
+  paypalElement
 }: UsePayPalScriptOptions) => {
   const INTENT = intent ? `&intent=${intent?.toLocaleLowerCase()}` : ''
 
@@ -19,10 +20,13 @@ const usePayPalScript = ({
   const { isLoadingButton, buttonLoaded, errorMessage } = buttonState
 
   useEffect(() => {
-    if (errorMessage) return
+    if (errorMessage || !paypalElement) return
 
     if (!clientId) {
+      console.log({ buttonState })
+
       const errorMessage = 'Client Id is required to load PayPal Smart Button'
+
       onError && onError(new Error(errorMessage))
 
       console.error(errorMessage)
@@ -62,7 +66,7 @@ const usePayPalScript = ({
         })
       })
     }
-  }, [buttonState])
+  }, [buttonState, paypalElement])
 
   return {
     buttonState,

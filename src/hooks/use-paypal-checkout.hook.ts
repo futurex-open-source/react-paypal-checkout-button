@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
-// eslint-disable-next-line no-unused-vars
-
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import {
   OnApproveDataTypes,
   UsePayPalCheckoutOptions,
@@ -15,6 +13,8 @@ const usePayPalCheckout = (
 ): UsePayPalCheckoutValues => {
   const GlobalWindow: any = window
 
+  const [paypalElement, setPayPalElement] = useState()
+
   const {
     clientId,
     intent = 'CAPTURE',
@@ -23,18 +23,20 @@ const usePayPalCheckout = (
     currency = 'USD',
     buttonStyles,
     onSuccess,
-    onError,
-    paypalRef
+    onError
   } = options
 
   const { buttonState, setButtonState } = usePayPalScript({
     clientId,
     currency,
     onError,
-    intent
+    intent,
+    paypalElement
   })
 
   const { isLoadingButton, buttonLoaded, errorMessage } = buttonState
+
+  const paypalRef = (node: any) => setPayPalElement(node)
 
   const onRetry = () => {
     setButtonState({
@@ -44,7 +46,7 @@ const usePayPalCheckout = (
     })
   }
 
-  const createOrder = (data: any, actions: any) => {
+  const createOrder = (_data: any, actions: any) => {
     const purchase_units = [
       {
         description: description,
@@ -55,7 +57,7 @@ const usePayPalCheckout = (
       }
     ]
 
-    console.log({ data, actions })
+    // console.log({ data, actions })
 
     return actions.order.create({
       intent,
@@ -82,14 +84,7 @@ const usePayPalCheckout = (
   }
 
   useEffect(() => {
-    // console.log({ scriptState })
-
-    if (
-      buttonLoaded &&
-      !isLoadingButton &&
-      !errorMessage &&
-      paypalRef?.current
-    ) {
+    if (buttonLoaded && !isLoadingButton && !errorMessage && paypalElement) {
       if (!GlobalWindow?.paypal) {
         const errorMessage =
           'PayPal button was not buttonLoaded successfully...'
@@ -111,14 +106,15 @@ const usePayPalCheckout = (
             onApprove,
             onError: errorHandler
           })
-          .render(paypalRef.current)
+          .render(paypalElement)
       })
     }
   }, [buttonState])
 
   return {
     ...buttonState,
-    onRetry
+    onRetry,
+    paypalRef
   }
 }
 
