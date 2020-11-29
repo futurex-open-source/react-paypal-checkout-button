@@ -27,13 +27,13 @@ import { usePayPalCheckout } from 'react-paypal-checkout-button'
 
 const App = () => {
 
-const paypalRef = useRef(null)
 
 const {
   isLoadingButton,
   errorMessage,
   buttonLoaded,
-  onRetry
+  onRetry,
+  paypalRef
 } = usePayPalCheckout({
   clientId: 'a*****************************',
   paypalRef,
@@ -47,18 +47,11 @@ const {
   }
 
 
-  if (isLoadingButton) return <p>Loading...</p>
+  return (
+    {isLoadingButton && <h3>loading..</h3>}
 
-  if (errorMessage)
-    return (
-      <div>
-        <p>{errorMessage}</p>
-
-        <button onClick={onRetry}>Try Again</button>
-      </div>
-    )
-
-  return buttonLoaded ? <div ref={paypalRef} /> : null
+    <div ref={paypalRef} />
+  )
 })
 
 export default App
@@ -110,9 +103,7 @@ type type PayPalCheckoutProps = {
 
 
 /********usePayPalCheckout Types**********/
-type UsePayPalCheckoutOptions = PayPalCheckoutProps & {
-  paypalRef: any
-}
+type UsePayPalCheckoutOptions = PayPalCheckoutProps
 
 export type ButtonState = {
   isLoadingButton: boolean
@@ -121,7 +112,8 @@ export type ButtonState = {
 }
 
 export type UsePayPalCheckoutValues = ButtonState & {
-  onRetry: () => void
+  onRetry: () => void,
+  paypalRef: (node: ReactElement | HTMLElement | null | undefined) => void
 }
 
 

@@ -9,7 +9,6 @@ export const UsingComponent = () => {
       clientId={process.env.REACT_APP_PAYPAL_CLIENT_ID}
       amount={100}
       currency='USD'
-      // buttonStyles={buttonStyles}
       onSuccess={(data, order) => {
         console.log({ data, order })
       }}
