@@ -1,5 +1,7 @@
 /* eslint-disable camelcase */
 
+import { ReactElement } from 'react'
+
 export type IntentOptions = 'CAPTURE' | 'AUTHORIZE'
 
 export type OnApproveDataTypes = {
@@ -96,11 +98,10 @@ export type UsePayPalScriptOptions = {
   currency: string
   intent?: IntentOptions
   onError?: (error: any) => void
+  paypalElement: ReactElement | HTMLElement | null | undefined
 }
 
-export type UsePayPalCheckoutOptions = PayPalCheckoutProps & {
-  paypalRef: any
-}
+export type UsePayPalCheckoutOptions = PayPalCheckoutProps
 
 export type ButtonState = {
   isLoadingButton: boolean
@@ -110,4 +111,5 @@ export type ButtonState = {
 
 export type UsePayPalCheckoutValues = ButtonState & {
   onRetry: () => void
+  paypalRef: (node: ReactElement | HTMLElement | null | undefined) => void
 }
