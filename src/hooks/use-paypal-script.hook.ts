@@ -19,24 +19,23 @@ const usePayPalScript = ({
 
   const { isLoadingButton, buttonLoaded, errorMessage } = buttonState
 
+  const handleError = (errorMessage: string) => {
+    onError && onError(new Error(errorMessage))
+    console.error(errorMessage)
+
+    return setButtonState({
+      isLoadingButton: false,
+      buttonLoaded: false,
+      errorMessage
+    })
+  }
+
   useEffect(() => {
     if (errorMessage || !paypalElement) return
 
-    if (!clientId) {
-      console.log({ buttonState })
-
-      const errorMessage = 'Client Id is required to load PayPal Smart Button'
-
-      onError && onError(new Error(errorMessage))
-
-      console.error(errorMessage)
-
-      return setButtonState({
-        isLoadingButton: false,
-        buttonLoaded: false,
-        errorMessage
-      })
-    }
+    // user did not pass a clientId
+    if (!clientId)
+      return handleError('Client Id is required to load PayPal Smart Button')
 
     if (!isLoadingButton && !buttonLoaded && !errorMessage) {
       setButtonState((prev) => ({ ...prev, isLoadingButton: true }))
@@ -52,19 +51,13 @@ const usePayPalScript = ({
         }))
       )
 
+      // when there is an error
+      script.addEventListener('error', () =>
+        handleError(`An error occured while loading paypal smart buttons`)
+      )
+
+      // finally append the script to the body
       document.body.appendChild(script)
-
-      script.addEventListener('error', (error) => {
-        console.error(error)
-
-        onError && onError(error)
-
-        return setButtonState({
-          isLoadingButton: false,
-          buttonLoaded: false,
-          errorMessage: `An error occured while isLoadingButton paypal smart buttons`
-        })
-      })
     }
   }, [buttonState, paypalElement])
 

@@ -11,20 +11,18 @@ import ErrorContainer from '../error-container.component'
 const PayPalCheckout: React.FC<PayPalCheckoutProps> = (props) => {
   const {
     isLoadingButton,
-    buttonLoaded,
     errorMessage,
     onRetry,
-
     paypalRef
   } = usePayPalCheckout({
     ...props
   })
 
   const renderReactPayPalStates = () => {
-    if (buttonLoaded) return
-
+    // If the button is loading, show the spinner
     if (isLoadingButton) return <Spinner isLoading={isLoadingButton} />
 
+    // If there is an error, show the error message
     if (errorMessage)
       return <ErrorContainer errorMessage={errorMessage} onRetry={onRetry} />
 

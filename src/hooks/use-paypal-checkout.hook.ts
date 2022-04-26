@@ -2,17 +2,18 @@
 /* eslint-disable camelcase */
 import { useEffect, useState } from 'react'
 import {
+  CustomWindow,
   OnApproveDataTypes,
   UsePayPalCheckoutOptions,
   UsePayPalCheckoutValues
 } from '../types'
 import usePayPalScript from './use-paypal-script.hook'
 
+declare let window: CustomWindow
+
 const usePayPalCheckout = (
   options: UsePayPalCheckoutOptions
 ): UsePayPalCheckoutValues => {
-  const GlobalWindow: any = window
-
   const [paypalElement, setPayPalElement] = useState()
 
   const {
@@ -57,8 +58,6 @@ const usePayPalCheckout = (
       }
     ]
 
-    // console.log({ data, actions })
-
     return actions.order.create({
       intent,
       purchase_units
@@ -66,8 +65,6 @@ const usePayPalCheckout = (
   }
 
   const errorHandler = (error: any) => {
-    console.error({ error })
-
     onError && onError(error)
   }
 
@@ -85,7 +82,7 @@ const usePayPalCheckout = (
 
   useEffect(() => {
     if (buttonLoaded && !isLoadingButton && !errorMessage && paypalElement) {
-      if (!GlobalWindow?.paypal) {
+      if (!window?.paypal) {
         const errorMessage =
           'PayPal button was not buttonLoaded successfully...'
 
@@ -99,7 +96,7 @@ const usePayPalCheckout = (
       }
 
       setTimeout(() => {
-        GlobalWindow.paypal
+        window.paypal
           .Buttons({
             ...(buttonStyles && { style: buttonStyles }),
             createOrder,

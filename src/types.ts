@@ -83,10 +83,13 @@ export type PayPalCheckoutProps = {
   onError?: (error: any) => void
 }
 
+export interface CustomWindow extends Window {
+  paypal: any
+}
+
 export type ErrorContainerProps = {
   errorMessage: string
   onRetry: () => void
-  // shouldRetry: boolean
 }
 
 export type SpinnerProps = {
